@@ -3,6 +3,7 @@ module order-service
 go 1.22.2
 
 require (
+	github.com/AleksKislov/grpc_microservices_test v0.0.0-20241227062527-8072f6033f09
 	google.golang.org/grpc v1.69.2
 	google.golang.org/protobuf v1.36.1
 )

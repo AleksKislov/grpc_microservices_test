@@ -6,7 +6,7 @@ import (
     "net"
     "sync"
 
-    pb "user-service/proto/user"
+    pb "github.com/AleksKislov/grpc_microservices_test/proto/user"
     "google.golang.org/grpc"
     "google.golang.org/grpc/codes"
     "google.golang.org/grpc/status"

@@ -1,6 +1,6 @@
 syntax = "proto3";
 package user;
-option go_package = "./proto";
+option go_package = "github.com/AleksKislov/grpc_microservices_test/proto/user";
 
 service UserService {
   rpc CreateUser (CreateUserRequest) returns (UserResponse);
