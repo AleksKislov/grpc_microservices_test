@@ -1,0 +1,32 @@
+syntax = "proto3";
+package review;
+option go_package = "github.com/AleksKislov/grpc_microservices_test/proto/review";
+
+service ReviewService {
+  rpc CreateReview (CreateReviewRequest) returns (ReviewResponse);
+  rpc GetReview (GetReviewRequest) returns (ReviewResponse);
+}
+
+message Review {
+  string id = 1;
+  string user_id = 2;
+  string order_id = 3;
+  int32 rating = 4;
+  string comment = 5;
+  string created_at = 6;
+}
+
+message CreateReviewRequest {
+  string user_id = 1;
+  string order_id = 2;
+  int32 rating = 3;
+  string comment = 4;
+}
+
+message GetReviewRequest {
+  string id = 1;
+}
+
+message ReviewResponse {
+  Review review = 1;
+}

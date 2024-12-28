@@ -6,6 +6,7 @@ service OrderService {
   rpc CreateOrder (CreateOrderRequest) returns (OrderResponse);
   rpc GetOrder (GetOrderRequest) returns (OrderResponse);
   rpc ListOrders (ListOrdersRequest) returns (ListOrdersResponse);
+  rpc UpdateOrder (UpdateOrderRequest) returns (OrderResponse);
 }
 
 message Order {
@@ -30,6 +31,11 @@ message CreateOrderRequest {
 
 message GetOrderRequest {
   string id = 1;
+}
+
+message UpdateOrderRequest {
+  string id = 1;
+  string status = 2;
 }
 
 message ListOrdersRequest {

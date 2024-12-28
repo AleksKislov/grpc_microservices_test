@@ -1,0 +1,33 @@
+syntax = "proto3";
+package payment;
+option go_package = "github.com/AleksKislov/grpc_microservices_test/proto/payment";
+
+service PaymentService {
+  rpc ProcessPayment (ProcessPaymentRequest) returns (PaymentResponse);
+  rpc GetPaymentStatus (GetPaymentStatusRequest) returns (PaymentResponse);
+}
+
+message Payment {
+  string id = 1;
+  string order_id = 2;
+  string user_id = 3;
+  float amount = 4;
+  string status = 5;
+  string payment_method = 6;
+  string created_at = 7;
+}
+
+message ProcessPaymentRequest {
+  string order_id = 1;
+  string user_id = 2;
+  float amount = 3;
+  string payment_method = 4;
+}
+
+message GetPaymentStatusRequest {
+  string payment_id = 1;
+}
+
+message PaymentResponse {
+  Payment payment = 1;
+}
