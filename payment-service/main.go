@@ -4,6 +4,7 @@ import (
     "context"
     "fmt"
     "log"
+		"os"
     "net"
     "sync"
     "time"
@@ -86,7 +87,8 @@ func (s *paymentService) GetPaymentStatus(ctx context.Context, req *paymentPb.Ge
 }
 
 func main() {
-    orderConn, err := grpc.Dial("localhost:50052", grpc.WithInsecure())
+    orderServiceAddr := os.Getenv("ORDER_SERVICE_ADDR")
+    orderConn, err := grpc.Dial(orderServiceAddr, grpc.WithInsecure())
     if err != nil {
         log.Fatalf("failed to connect to order service: %v", err)
     }
@@ -94,7 +96,7 @@ func main() {
 
     orderClient := orderPb.NewOrderServiceClient(orderConn)
 
-    lis, err := net.Listen("tcp", ":50053")
+    lis, err := net.Listen("tcp", ":50051")
     if err != nil {
         log.Fatalf("failed to listen: %v", err)
     }

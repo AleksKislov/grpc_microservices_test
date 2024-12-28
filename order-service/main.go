@@ -4,6 +4,7 @@ import (
     "context"
     "log"
     "net"
+		"os"
     "sync"
     "time"
 		"fmt"
@@ -42,7 +43,6 @@ func (s *orderService) CreateOrder(ctx context.Context, req *pb.CreateOrderReque
     s.mu.Lock()
     defer s.mu.Unlock()
 
-    // Simple ID generation
     id := fmt.Sprintf("order_%d", len(s.orders)+1)
 
     order := &pb.Order{
@@ -53,7 +53,6 @@ func (s *orderService) CreateOrder(ctx context.Context, req *pb.CreateOrderReque
         CreatedAt: time.Now().Format(time.RFC3339),
     }
 
-    // Calculate total amount
     var totalAmount float32
     for _, item := range req.Items {
         totalAmount += item.Price * float32(item.Quantity)
@@ -113,7 +112,9 @@ func (s *orderService) ListOrders(ctx context.Context, req *pb.ListOrdersRequest
 }
 
 func main() {
-    userConn, err := grpc.Dial("localhost:50051", grpc.WithInsecure())
+    userServiceAddr := os.Getenv("USER_SERVICE_ADDR")
+		fmt.Printf("user service address: %s \n", userServiceAddr)
+    userConn, err := grpc.Dial(userServiceAddr, grpc.WithInsecure())
     if err != nil {
         log.Fatalf("failed to connect to user service: %v", err)
     }
@@ -121,7 +122,7 @@ func main() {
 
     userClient := userPb.NewUserServiceClient(userConn)
 
-    lis, err := net.Listen("tcp", ":50052")
+    lis, err := net.Listen("tcp", ":50051")
     if err != nil {
         log.Fatalf("failed to listen: %v", err)
     }

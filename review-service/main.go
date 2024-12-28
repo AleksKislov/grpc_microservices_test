@@ -4,6 +4,7 @@ import (
     "context"
     "fmt"
     "log"
+		"os"
     "net"
     "sync"
     "time"
@@ -87,13 +88,16 @@ func (s *reviewService) GetReview(ctx context.Context, req *reviewPb.GetReviewRe
 }
 
 func main() {
-    userConn, err := grpc.Dial("localhost:50051", grpc.WithInsecure())
+    userServiceAddr := os.Getenv("USER_SERVICE_ADDR")
+
+    userConn, err := grpc.Dial(userServiceAddr, grpc.WithInsecure())
     if err != nil {
         log.Fatalf("failed to connect to user service: %v", err)
     }
     defer userConn.Close()
 
-    orderConn, err := grpc.Dial("localhost:50052", grpc.WithInsecure())
+    orderServiceAddr := os.Getenv("ORDER_SERVICE_ADDR")
+    orderConn, err := grpc.Dial(orderServiceAddr, grpc.WithInsecure())
     if err != nil {
         log.Fatalf("failed to connect to order service: %v", err)
     }
